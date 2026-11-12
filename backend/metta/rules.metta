@@ -1,5 +1,5 @@
 ; ============================================================
-; Syncsenta — Pedagogical Reasoning Rules (MeTTa source)
+; OMEGA TAA — AI Literacy Pedagogical Rules (MeTTa source)
 ; ============================================================
 ; These rules fire when the AtomSpace contains matching atom patterns.
 ; Every rule produces an Inferred atom that carries :because, :rule,
@@ -11,96 +11,112 @@
 ;   Level 3 — Direct Nudge (teacher-initiated or pre-approved)
 ; ============================================================
 
-; --- Rule: Denominator confusion detection ---
-; If a student believes 1/4 > 1/2, but curriculum says 1/4 < 1/2,
-; infer denominator confusion with confidence 0.78.
+; --- Rule: Prediction treated as permission to act ---
+; If a student believes a model prediction authorizes an action and explains
+; that the prediction is sufficient, compare this with the approved lesson fact.
 ;
 ; Pattern:
-;   (Believes S (Greater 1/4 1/2)) + (CurriculumTruth (Less 1/4 1/2))
-;   => (Inferred (Confused S Denominators) :confidence 0.78)
+;   (Believes S PredictionAuthorizesAction)
+;   + (Reasoning S PredictionIsPermission)
+;   + (CurriculumTruth PredictionIsNotPermissionToAct)
+;   => (Inferred (Confused S PredictionAndAuthorization) :confidence 0.78)
 ;
-; Autonomy: Level 2 (suggest visual demo to teacher)
+; Autonomy: Level 2 (suggest a teacher-led review of prediction vs action)
 
-(: rule_denominator_confusion_v1
+(: rule_prediction_action_confusion_v1
   (rule
-    :match (Believes $S (Greater 1/4 1/2))
-    :contradicts (CurriculumTruth (Less 1/4 1/2))
-    :infer (Inferred (Confused $S Denominators)
-      :because [ (Believes $S (Greater 1/4 1/2)) ]
-      :rule rule_denominator_confusion_v1
+    :match (Believes $S PredictionAuthorizesAction)
+    :requires (Reasoning $S PredictionIsPermission)
+    :contradicts (CurriculumTruth PredictionIsNotPermissionToAct)
+    :infer (Inferred (Confused $S PredictionAndAuthorization)
+      :because [ (Believes $S PredictionAuthorizesAction)
+                 (Reasoning $S PredictionIsPermission)
+                 (CurriculumTruth PredictionIsNotPermissionToAct) ]
+      :rule rule_prediction_action_confusion_v1
       :confidence 0.78)
-    :action (Suggest Teacher VisualModel :target $S :level 2)
+    :action (Suggest Teacher ReviewPredictionAndAction :target $S :level 2)
     :autonomy 2))
 
-; --- Rule: Disengagement risk ---
-; If silence > 90s and previous confusion exists, flag disengagement.
+; --- Rule: AI output treated as guaranteed truth ---
+; A learner's explicit belief that an AI output is always correct conflicts
+; with the approved AI-literacy principle that output needs checking.
 ;
 ; Pattern:
-;   (Silence $S :duration >90) + (Confused $S $T)
-;   => (Risk Disengaged $S 0.71)
+;   (Believes S ModelOutputAlwaysCorrect)
+;   + (CurriculumTruth MachineOutputIsNotAutomaticallyTrueFairOrIntelligent)
+;   => (Inferred (OvertrustsAIOutput S) ...)
 ;
-; Autonomy: Level 1 (observe only, update dashboard)
+; Autonomy: Level 2 (suggest a source-checking discussion)
 
-(: rule_disengagement_v1
+(: rule_ai_output_overtrust_v1
   (rule
-    :match (Silence $S :duration $D)
-    :condition (> $D 90)
-    :requires (Confused $S $T)
-    :infer (Inferred (Risk Disengaged $S 0.71)
-      :because [ (Silence $S :duration $D) (Confused $S $T) ]
-      :rule rule_disengagement_v1
-      :confidence 0.71)
-    :action (UpdateDashboard $S DisengagementRisk)
-    :autonomy 1))
+    :match (Believes $S ModelOutputAlwaysCorrect)
+    :contradicts
+      (CurriculumTruth MachineOutputIsNotAutomaticallyTrueFairOrIntelligent)
+    :infer (Inferred (OvertrustsAIOutput $S)
+      :because [ (Believes $S ModelOutputAlwaysCorrect)
+                 (CurriculumTruth MachineOutputIsNotAutomaticallyTrueFairOrIntelligent) ]
+      :rule rule_ai_output_overtrust_v1
+      :confidence 0.72)
+    :action (Suggest Teacher CheckAIOutput :target $S :level 2)
+    :autonomy 2))
 
-; --- Rule: Class-level misconception aggregation ---
-; If > 40% of students share the same misconception, fire class-level alert.
+; --- Rule: Class-level AI concept misconception aggregation ---
+; If more than 40% of enrolled learners show the same supported AI-literacy
+; misconception, suggest a class review. Every contributing learner inference
+; must remain available as evidence.
 ;
 ; Pattern:
-;   (Count (Confused $S $T)) / (Count (Enrolled $S $C)) > 0.40
-;   => (ClassMisconception $C $T $ratio)
+;   (Count (OvertrustsAIOutput $S)) / (Count (Enrolled $S $C)) > 0.40
+;   => (ClassMisconception $C AIOutputReliability $ratio)
 ;
-; Autonomy: Level 2 (suggest class-wide intervention)
+; Autonomy: Level 2 (suggest a class-wide AI output checking activity)
 
-(: rule_class_misconception_v1
+(: rule_class_ai_misconception_v1
   (rule
-    :match (Confused $S $T)
-    :condition (> (Ratio (Count (Confused $S $T)) (Count (Enrolled $S $C))) 0.40)
-    :infer (Inferred (ClassMisconception $C $T $ratio)
-      :because [ (Confused $S $T) ... ]
-      :rule rule_class_misconception_v1
+    :match (OvertrustsAIOutput $S)
+    :condition
+      (> (Ratio (Count (OvertrustsAIOutput $S)) (Count (Enrolled $S $C))) 0.40)
+    :infer (Inferred (ClassMisconception $C AIOutputReliability $ratio)
+      :because [ (OvertrustsAIOutput $S) ... ]
+      :rule rule_class_ai_misconception_v1
       :confidence 0.65)
-    :action (Suggest Teacher ClassWideReview :target $C :level 2)
+    :action (Suggest Teacher AIOutputCheck :target $C :level 2)
     :autonomy 2))
 
-; --- Rule: Mastery delta calculation ---
-; After a quiz, compute mastery delta and merge into student AtomSpace.
-; Only atoms with confidence > 0.7 and not contradicted are promoted.
+; --- Rule: AI literacy mastery delta ---
+; After an AI-literacy quiz, compute a topic mastery delta from a checked answer.
+; Only teacher-validated evidence above the confidence threshold is eligible
+; for a later student-model promotion.
 ;
-; Autonomy: Level 1 (automatic, post-class)
+; Autonomy: Level 1 (observe and queue for post-lesson review)
 
-(: rule_mastery_delta_v1
+(: rule_ai_literacy_mastery_delta_v1
   (rule
     :match (Answered $S $quiz $result)
-    :infer (Inferred (MasteryDelta $S $topic $delta)
-      :because [ (Answered $S $quiz $result) ]
-      :rule rule_mastery_delta_v1
+    :requires (QuizTopic $quiz AIFoundations)
+    :infer (Inferred (MasteryEvidence $S AIFoundations $result)
+      :because [ (Answered $S $quiz $result)
+                 (QuizTopic $quiz AIFoundations) ]
+      :rule rule_ai_literacy_mastery_delta_v1
       :confidence 0.90)
-    :action (MergeToStudentAtomSpace $S)
+    :action (QueueTeacherReview $S AIFoundations)
     :autonomy 1))
 
-; --- Rule: Visual example effectiveness (discovered by PLN) ---
-; This is a rule candidate discovered by overnight PLN correlation.
-; It is proposed to a human curriculum reviewer, not auto-deployed.
+; --- Rule: AI concept teaching activity effectiveness candidate ---
+; This is a candidate correlation, not an established fact. A human curriculum
+; reviewer must validate it before it can become an enabled lesson rule.
 ;
-; Autonomy: Level 2 (pending human review)
+; Autonomy: Level 2 (propose for human review; never auto-deploy)
 
-(: rule_visual_effectiveness_candidate_v1
+(: rule_ai_activity_effectiveness_candidate_v1
   (rule
-    :match (LearningStyle $S Visual) + (Intervention Teacher VisualModel :result $R)
-    :infer (Inferred (EffectiveRatio VisualExample 2.3)
-      :because [ (Intervention Teacher VisualModel :result Improved) ... ]
-      :rule rule_visual_effectiveness_candidate_v1
+    :match (Intervention Teacher RulePredictionActionDiagram :result $R)
+    :requires (AssessmentTopic $assessment AIFoundations)
+    :infer (Inferred (CandidateEffectiveness RulePredictionActionDiagram $R)
+      :because [ (Intervention Teacher RulePredictionActionDiagram :result $R)
+                 (AssessmentTopic $assessment AIFoundations) ... ]
+      :rule rule_ai_activity_effectiveness_candidate_v1
       :confidence 0.62)
     :status proposed
     :autonomy 2))

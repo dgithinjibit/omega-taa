@@ -1,0 +1,13 @@
+ARG OMEGA_IMAGE=singularitynet/omega:v0.1.21
+FROM ${OMEGA_IMAGE}
+
+COPY backend/metta/omega-plugins.yaml /PeTTa/repos/Omega/config/plugins.yaml
+COPY backend/metta/omega-groq.yaml /PeTTa/repos/Omega/config/config.yaml
+COPY backend/metta/skills.metta /PeTTa/repos/omega-taa/backend/metta/skills.metta
+COPY backend/omega_runtime/omega_taa_channel.py /PeTTa/repos/omega-taa/backend/omega_runtime/omega_taa_channel.py
+
+# Omega scrubs its environment at entrypoint startup. Preserve only the
+# provider credential needed by its OpenAI-compatible client.
+RUN grep -Fq 'TEST_SERVER_IP"' /PeTTa/repos/Omega/entrypoint.sh \
+    && sed -i 's/TEST_SERVER_IP"/TEST_SERVER_IP OPENAIAPI_API_KEY"/' /PeTTa/repos/Omega/entrypoint.sh \
+    && grep -Fq 'TEST_SERVER_IP OPENAIAPI_API_KEY"' /PeTTa/repos/Omega/entrypoint.sh

@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#3ec996" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.33 4 4 0 0 0 .556 6.881A4 4 0 1 0 12 18X12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.33 4 4 0 0 1-.556 6.881A4 4 0 1 1 12 18Z12 5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">OMEGA TAA</title>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#0b1220"/>
+  <path d="M15 48h9V31c0-10 6-17 16-17s16 7 16 17v17h-9" fill="none" stroke="#3ec996" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+  <path d="M24 48h18" fill="none" stroke="#3ec996" stroke-linecap="round" stroke-width="4"/>
+  <circle cx="15" cy="48" r="3.5" fill="#9cebd0"/>
+  <circle cx="47" cy="48" r="3.5" fill="#9cebd0"/>
+  <circle cx="40" cy="14" r="3.5" fill="#9cebd0"/>
+</svg>
