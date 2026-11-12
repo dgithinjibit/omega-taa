@@ -7,10 +7,11 @@ export function renderArchitecture() {
       <div class="max-w-7xl mx-auto px-5 sm:px-8">
         <div class="max-w-2xl">
           <div class="text-xs font-mono uppercase tracking-widest text-brand-400/80 mb-3">System Architecture</div>
-          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-ink-100">The full cognitive pipeline</h2>
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-ink-100">The current MVP and its boundaries</h2>
           <p class="mt-4 text-ink-400 leading-relaxed">
-            Six layers, from raw classroom audio to an immutable audit log. Each
-            layer is replaceable, degradable, and independently testable.
+            This is the path implemented in the connected demo—not the complete
+            classroom vision. Proposed integrations and production controls are
+            called out explicitly.
           </p>
         </div>
         <div class="mt-14 flex flex-col gap-3">
@@ -33,12 +34,12 @@ export function renderArchitecture() {
           }).join('')}
         </div>
         <div class="mt-16">
-          <h3 class="text-xs font-mono uppercase tracking-widest text-ink-500 mb-5">Deployment Modes</h3>
+          <h3 class="text-xs font-mono uppercase tracking-widest text-ink-500 mb-5">Deployment status</h3>
           <div class="grid md:grid-cols-3 gap-4">
             ${[
-              { mode: 'Mode A', title: 'Classroom Laptop', desc: 'All services on one machine. 1 class, 5–15 students. Pilot mode.', tag: 'Pilot' },
-              { mode: 'Mode B', title: 'School Server', desc: 'One on-prem server per school. 3–5 concurrent classes.', tag: 'Scale' },
-              { mode: 'Mode C', title: 'Regional Cloud', desc: 'Kubernetes cluster. 50+ concurrent classes. Future.', tag: 'Future' },
+              { mode: 'Current', title: 'Omega co-tutor prototype', desc: 'Vite frontend + bearer-token-protected FastAPI demo + Omega / PeTTa profile configured for Groq. Synthetic text only; runtime exchange is not verified, and Omega may persist conversation history.', tag: 'Prototype' },
+              { mode: 'Next', title: 'Controlled teacher test', desc: 'Requires access control, durable audit, retention controls, evaluation, and privacy approval.', tag: 'Not ready' },
+              { mode: 'Later', title: 'Marketplace service', desc: 'Requires current platform onboarding, compatible service protocol, provider review, and operations.', tag: 'Not ready' },
             ].map(d => `
               <div class="bg-ink-900/30 border border-ink-800/50 rounded-xl p-5">
                 <div class="flex items-center justify-between mb-3">

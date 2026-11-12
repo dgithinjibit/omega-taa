@@ -1,10 +1,9 @@
 import { icon } from '../icons.js';
 
 const links = [
-  { label: 'Philosophy', href: '#principles' },
-  { label: 'Curriculum', href: '#curriculum' },
-  { label: 'Glass-Box Demo', href: '#demo' },
-  { label: 'Architecture', href: '#architecture' },
+  { label: 'Principles', href: '#principles' },
+  { label: 'Live demo', href: '#demo' },
+  { label: 'MVP boundaries', href: '#architecture' },
 ];
 
 export function renderNavbar() {
@@ -15,11 +14,11 @@ export function renderNavbar() {
           <div class="w-9 h-9 rounded-lg bg-brand-500/10 border border-brand-500/30 flex items-center justify-center group-hover:border-brand-400/60 transition-colors">
             ${icon('brain', 20, 'text-brand-400')}
           </div>
-          <span class="text-lg font-semibold tracking-tight text-ink-100">syncsenta</span>
+          <span class="text-lg font-semibold tracking-tight text-ink-100">OMEGA TAA</span>
         </a>
         <div class="hidden md:flex items-center gap-8">
           ${links.map(l => `<a href="${l.href}" class="text-sm text-ink-400 hover:text-ink-100 transition-colors">${l.label}</a>`).join('')}
-          <a href="#enroll" class="text-sm font-medium text-ink-950 bg-brand-400 hover:bg-brand-300 px-4 py-2 rounded-lg transition-colors">Enroll</a>
+          <a href="#demo" class="text-sm font-medium text-ink-950 bg-brand-400 hover:bg-brand-300 px-4 py-2 rounded-lg transition-colors">Try demo</a>
         </div>
         <button id="menu-toggle" class="md:hidden text-ink-300 p-1" aria-label="Toggle menu">
           ${icon('menu', 24)}
@@ -28,7 +27,7 @@ export function renderNavbar() {
       <div id="mobile-menu" class="hidden md:hidden bg-ink-950/95 backdrop-blur-xl border-b border-ink-800/60">
         <div class="px-5 py-4 flex flex-col gap-3">
           ${links.map(l => `<a href="${l.href}" class="mobile-link text-sm text-ink-300 hover:text-ink-100 py-2">${l.label}</a>`).join('')}
-          <a href="#enroll" class="mobile-link text-sm font-medium text-ink-950 bg-brand-400 px-4 py-2 rounded-lg text-center mt-2">Enroll</a>
+          <a href="#demo" class="mobile-link text-sm font-medium text-ink-950 bg-brand-400 px-4 py-2 rounded-lg text-center mt-2">Try demo</a>
         </div>
       </div>
     </header>

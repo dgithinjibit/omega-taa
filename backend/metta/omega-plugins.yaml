@@ -1,0 +1,9 @@
+- name: omega_taa_channel
+  loader: python
+  location: /PeTTa/repos/omega-taa/backend/omega_runtime
+- name: openaiapi
+  loader: python
+  location: "{REPO}/providers"
+- name: skills
+  loader: metta
+  location: /PeTTa/repos/omega-taa/backend/metta

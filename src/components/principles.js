@@ -9,8 +9,9 @@ export function renderPrinciples() {
           <div class="text-xs font-mono uppercase tracking-widest text-brand-400/80 mb-3">Design Philosophy</div>
           <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-ink-100">Six non-negotiable principles</h2>
           <p class="mt-4 text-ink-400 leading-relaxed">
-            Every architectural decision in this course satisfies these principles.
-            They are the difference between AI that augments and AI that replaces.
+            These are the product's design targets. The current prototype meets
+            only some of them; see the implementation status and north-star spec
+            for gaps before any real classroom use.
           </p>
         </div>
         <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

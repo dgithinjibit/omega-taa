@@ -1,0 +1,8 @@
+# Classroom Omega runtime profile. The launcher passes the secret separately.
+provider: OpenAIAPI
+commchannel: websocket
+api_token_var: OPENAIAPI_API_KEY
+openaiapi_url: https://api.groq.com/openai/v1/
+openaiapi_model: openai/gpt-oss-20b
+maxNewInputLoops: 3
+maxWakeLoops: 0

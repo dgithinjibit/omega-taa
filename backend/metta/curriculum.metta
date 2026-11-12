@@ -1,27 +1,36 @@
 ; ============================================================
-; Syncsenta — Curriculum AtomSpace (MeTTa source)
+; OMEGA TAA — AI Literacy Curriculum AtomSpace (MeTTa source)
 ; ============================================================
 ; This file defines the curriculum atoms that ground all reasoning.
 ; The agent cannot invent curriculum — all reasoning is anchored
 ; to these teacher-approved atoms.
 ; ============================================================
 
-; --- Topic hierarchy ---
-(Topic Fractions)
-(Subtopic Fractions Denominators)
-(Subtopic Fractions Addition)
-(Subtopic Fractions Division)
+; --- Topic hierarchy: CodeYetu AI Foundations, Day 01 ---
+(Topic AIFoundations)
+(Subtopic AIFoundations RulesPredictionsAndActions)
+(Subtopic AIFoundations ResponsibleAIUse)
+(Subtopic AIFoundations NeuralSymbolicSystems)
 
 ; --- Prerequisite graph ---
-(Prerequisite Fractions Addition)
-(Prerequisite Fractions Multiplication)
-(Requires Fractions (Division ByTwo))
+(Prerequisite RulesPredictionsAndActions AIFoundations)
+(Prerequisite ResponsibleAIUse AIFoundations)
+(Requires AgentActions HumanReview)
 
-; --- Curriculum truths (ground truth for misconception detection) ---
-(CurriculumTruth (Less 1/4 1/2) :confidence 1.0)
-(CurriculumTruth (Less 1/3 1/2) :confidence 1.0)
-(CurriculumTruth (Greater 3/4 1/2) :confidence 1.0)
-(CurriculumTruth (Equal 2/4 1/2) :confidence 1.0)
+; --- Teacher-approved curriculum truths ---
+; A fixed rule follows instructions written by a person.
+(CurriculumTruth (FixedRule FollowsHumanWrittenInstructions) :confidence 1.0)
+; A learned model estimates patterns from examples.
+(CurriculumTruth (LearnedModel EstimatesPatternsFromExamples) :confidence 1.0)
+; A prediction is not authorization for a system to act.
+(CurriculumTruth PredictionIsNotPermissionToAct :confidence 1.0)
+; Machine output is not automatically true, fair, or intelligent.
+(CurriculumTruth MachineOutputIsNotAutomaticallyTrueFairOrIntelligent :confidence 1.0)
+; An agent may connect a model output to a proposed action; these are distinct steps.
+(CurriculumTruth (AgentCanProposeActionFrom ModelOutput) :confidence 1.0)
+; The initial test lesson follows the CodeYetu Day 01 learning outcome:
+; distinguish a fixed rule, a learned prediction, and a proposed agent action.
+(LearningOutcome DistinguishFixedRuleLearnedPredictionAndProposedAgentAction)
 
 ; --- Learning style atoms ---
 (LearningStyle Visual)
@@ -34,5 +43,5 @@
 (EffectiveFor Kinesthetic HandsOnActivity :confidence 0.88)
 
 ; --- Mastery thresholds ---
-(MasteryThreshold Fractions 0.70)
-(MasteryThreshold Denominators 0.75)
+(MasteryThreshold AIFoundations 0.70)
+(MasteryThreshold ResponsibleAIUse 0.75)

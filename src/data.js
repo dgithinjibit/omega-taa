@@ -97,34 +97,25 @@ export const courseModules = [
 export const principles = [
   { title: 'Glass-Box First', description: 'No pedagogical action without a traceable inference chain. If we cannot explain it, we do not act on it.', icon: 'eye' },
   { title: 'Teacher-in-the-Loop', description: 'The agent suggests, nudges, and surfaces. The teacher authorizes high-stakes interventions.', icon: 'users' },
-  { title: 'Local-First Privacy', description: "Raw audio and video never leave the deployment. Atoms are the persistent record, not transcripts.", icon: 'lock' },
-  { title: 'Portable Student Models', description: "A student's AtomSpace is their learning passport. It moves with them across classes and subjects.", icon: 'luggage' },
-  { title: 'Curriculum-Grounded', description: 'The agent cannot invent curriculum. All reasoning is anchored to a teacher-approved curriculum graph.', icon: 'bookOpen' },
-  { title: 'Offline-Degraded', description: 'Works on low bandwidth, intermittent power, and old hardware. Graceful degradation is a feature.', icon: 'wifiOff' },
+  { title: 'Data Minimization', description: 'Development uses synthetic text. The demo sends submitted text through Omega to the configured model provider; no real learner data is approved.', icon: 'lock' },
+  { title: 'No Learner Profiles', description: 'Cross-lesson student memory is a future idea, not an MVP feature. This prototype holds only one in-memory lesson.', icon: 'luggage' },
+  { title: 'Curriculum-Grounded', description: 'The co-tutor has bounded skills for checking and explaining the approved AI-literacy lesson content. Model responses still require review.', icon: 'bookOpen' },
+  { title: 'Graceful Failure', description: 'If the Omega runtime or API is unavailable, the demo reports the failure; there is no Python reasoner or offline tutor fallback.', icon: 'wifiOff' },
 ];
 
 export const architectureLayers = [
-  { name: 'Transport', tech: 'Jitsi Meet', description: 'Video, audio, and chat. The room. Bot joins as a silent observer.', color: 'accent' },
-  { name: 'Perception', tech: 'Whisper · VAD · Diarization', description: 'Neural layer. Speech-to-text, speaker separation, voice activity detection.', color: 'brand' },
-  { name: 'Atomizer', tech: 'Constrained LLM', description: 'Converts utterances into schema-valid MeTTa atoms. No free text. No hallucination.', color: 'accent' },
-  { name: 'OMEGA Core', tech: 'Hyperon · AtomSpace', description: 'The mind. Per-lesson and global AtomSpaces. PLN reasoning. Pedagogical rules.', color: 'brand' },
-  { name: 'Action', tech: 'Bot · Dashboard · DeepTutor', description: 'Three-tier autonomy: observe, suggest, nudge. Teacher-controlled at every level.', color: 'accent' },
-  { name: 'Persistence', tech: 'AtomSpace Store · Audit Log', description: 'Atoms persist. Transcripts expire. Audit logs are immutable and exportable.', color: 'brand' },
-];
-
-export const inferenceTrace = [
-  { id: 1, layer: 'Perception', label: 'Student utterance captured', atom: '(Said stu_002 "I think 1/4 is bigger because 4 is bigger than 2" :ts 14:02:11)', confidence: 0.98, detail: 'Whisper transcribes audio locally. Diarization identifies speaker as stu_002. Latency: 2.1s.' },
-  { id: 2, layer: 'Atomizer', label: 'Utterance converted to atoms', atom: '(Believes stu_002 (Greater 1/4 1/2) :confidence 0.85)\n(Reasoning stu_002 BiggerDenominator)', confidence: 0.85, detail: 'Constrained LLM maps the utterance to schema-valid atoms. Output validated against atom schema — no free text.' },
-  { id: 3, layer: 'Reasoning', label: 'Misconception rule fires', atom: '(Inferred (Confused stu_002 Denominators)\n  :because [ (Believes stu_002 (Greater 1/4 1/2)) ]\n  :rule rule_denominator_confusion_v1\n  :confidence 0.78)', confidence: 0.78, detail: 'Pattern match: student belief contradicts curriculum truth (1/4 < 1/2). Rule fires with evidence chain attached.' },
-  { id: 4, layer: 'Action', label: 'Suggestion pushed to teacher', atom: '(Suggest Teacher VisualModel\n  :target stu_002\n  :reason (Confused stu_002 Denominators)\n  :level 2)', confidence: 0.78, detail: 'Level 2 action: teacher must approve. Dashboard card: "Student 002 may confuse denominators. Suggest visual demo?"' },
-  { id: 5, layer: 'Audit', label: 'Action logged immutably', atom: '(ActionLog :id act_0142\n  :rule rule_denominator_confusion_v1\n  :input [ (Believes stu_002 ...) ]\n  :output [ (Suggest Teacher VisualModel) ]\n  :confidence 0.78\n  :approval pending)', confidence: 1.0, detail: 'Every AI action is logged with rule ID, input atoms, output atoms, confidence, and teacher approval status. Immutable. Exportable.' },
+  { name: 'Input', tech: 'Synthetic text · HTTP classroom adapter', description: 'The demo sends one synthetic lesson event through a typed API to the live Omega runtime. Jitsi, audio capture, and speech recognition are not connected.', color: 'accent' },
+  { name: 'Agent runtime', tech: 'Omega / PeTTa · LLM tool loop', description: 'Omega owns the agent loop and uses its configured provider. In this profile the generic OpenAI client targets Groq Cloud; no OpenAI API key is used.', color: 'brand' },
+  { name: 'Co-tutor skills', tech: 'Restricted MeTTa plugin', description: 'The classroom profile exposes only fixed AI-literacy explanations, hints, practice checks, curriculum checks, a follow-up question, and a response tool.', color: 'accent' },
+  { name: 'Classroom boundary', tech: 'Authenticated, request-correlated WebSocket', description: 'The Python service validates lesson roster and pause state, transports requests and responses, and does not atomize, infer, or tutor.', color: 'brand' },
+  { name: 'Data handling', tech: 'Synthetic-only development profile', description: 'Omega may retain conversation history according to its runtime configuration. Review and disable or bound that behavior before using learner data.', color: 'accent' },
 ];
 
 export const stats = [
-  { value: '7', label: 'Course Modules' },
-  { value: '19', label: 'Weeks of Content' },
-  { value: '100%', label: 'Traceable Actions' },
-  { value: '3', label: 'Tier Autonomy Model' },
+  { value: 'Omega', label: 'Agent runtime' },
+  { value: 'MeTTa', label: 'Co-tutor skills' },
+  { value: 'Groq', label: 'Model provider' },
+  { value: '0', label: 'Python tutoring rules' },
 ];
 
 export const levelStyles = {

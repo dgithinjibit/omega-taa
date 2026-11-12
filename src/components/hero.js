@@ -11,24 +11,24 @@ export function renderHero() {
         <div class="flex flex-col items-center text-center">
           <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-xs font-medium text-brand-300 mb-8 animate-fade-in">
             <span class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse-slow"></span>
-            AI Engineering Course · Now Enrolling
+            Omega / PeTTa AI-literacy co-tutor · Synthetic demo
           </div>
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink-100 leading-[1.1] max-w-4xl animate-fade-up">
-            Build AI systems that can <span class="text-brand-400">explain why</span>
+            AI literacy, taught with <span class="text-brand-400">Omega / PeTTa</span>
           </h1>
           <p class="mt-6 text-lg text-ink-400 max-w-2xl leading-relaxed animate-fade-up" style="animation-delay:0.1s">
-            A 19-week course in glass-box cognitive engineering. Learn to build
-            neuro-symbolic systems where neural perceives, symbolic reasons, and
-            every decision carries a traceable inference chain.
+            Ask a lesson-scoped question about AI. Omega runs the agent loop,
+            uses the configured Groq model and classroom MeTTa skills, then
+            returns a conversational answer. This prototype does not diagnose
+            learners or take action on their behalf.
           </p>
           <div class="mt-10 flex flex-col sm:flex-row items-center gap-4 animate-fade-up" style="animation-delay:0.2s">
-            <a href="#curriculum" class="group inline-flex items-center gap-2 bg-brand-400 hover:bg-brand-300 text-ink-950 font-semibold px-6 py-3 rounded-xl transition-all hover:scale-[1.02]">
-              Explore the curriculum
+            <a href="#demo" class="group inline-flex items-center gap-2 bg-brand-400 hover:bg-brand-300 text-ink-950 font-semibold px-6 py-3 rounded-xl transition-all hover:scale-[1.02]">
+              Ask the co-tutor
               ${icon('arrowRight', 16, 'group-hover:translate-x-0.5 transition-transform')}
             </a>
-            <a href="#demo" class="inline-flex items-center gap-2 border border-ink-700 hover:border-ink-500 text-ink-200 font-medium px-6 py-3 rounded-xl transition-colors">
-              ${icon('terminal', 16)}
-              See the glass-box demo
+            <a href="#architecture" class="inline-flex items-center gap-2 border border-ink-700 hover:border-ink-500 text-ink-200 font-medium px-6 py-3 rounded-xl transition-colors">
+              How the MVP works
             </a>
           </div>
           <div class="mt-20 w-full grid grid-cols-2 lg:grid-cols-4 gap-px bg-ink-800/50 rounded-2xl overflow-hidden border border-ink-800/60 animate-fade-up" style="animation-delay:0.3s">
